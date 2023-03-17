@@ -1,5 +1,5 @@
 # CCI-CodingTwo-projects
-This Project requests real-time data from the web as input, generates plots to visualise data. I combines the content from Coding Two with my previous data analysis experience.  
+This Project requests real-time data from the web as input, generates plots to visualise data. I combined the content from Coding Two with my previous data analysis experience.  
 .  
 There are two main functions in this project. They both take input from OpenWeatherMap with API key, request real-time weather data by city names, then visualise the data on figures.  
 .  
