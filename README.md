@@ -1,7 +1,7 @@
 # CCI-CodingTwo-projects
-This Project requests real-time data from the web as input, generates plots to visulise data.  
+This Project requests real-time data from the web as input, generates plots to visualise data. I combines the content from Coding Two with my previous data analysis experience.  
 .  
-There are two main functions in this project. They both take input from OpenWeatherMap with API key, request real-time weather data by city names, then visualise the data on plots.  
+There are two main functions in this project. They both take input from OpenWeatherMap with API key, request real-time weather data by city names, then visualise the data on figures.  
 .  
 The geo_visualise.py takes real-time temperatrue data of 40 most populas cities around the world and uses a scatter plot to visulise them. The scaterplot uses longitude as X-axis and latitude as Y-axis, similar as the illustartion of a world map. The background is a world map image. The scatters visualise the real-time temperature of the exact cities on Earth. The colour of the scatter is determined by a customised colour map, where higher temperatures are represented by warmer colors and lower temperatures by cooler colors.  
 
