@@ -11,6 +11,7 @@ import os
 from matplotlib import gridspec
 import tensorflow as tf
 import tensorflow_hub as hub
+from PIL import Image
 
 # This function from https://github.com/ual-cci/MSc-Coding-2/blob/master/Week-7-notebooks/tf2_arbitrary_image_stylization.ipynb
 def load_image(image_url, image_size=(256, 256), preserve_aspect_ratio=True):
@@ -32,7 +33,7 @@ def load_image(image_url, image_size=(256, 256), preserve_aspect_ratio=True):
     img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
     return img
 
-def scatter_map():
+def scatter_map(style_image_url):
 
     # My OpenWeatherMap API key 
     api_key = "3905fbad650e10ba349d5e6707db4ad7"
@@ -104,17 +105,17 @@ def scatter_map():
 
     # Add a image of world map as background
     # Source: https://en.wikipedia.org/wiki/File:World_location_map_(equirectangular_180).svg    
-    curr_image = plt.imread('images/world_map.png')
+    image = Image.open('images/world_map.png')
+    image.save('images/world_map.jpg')
+    curr_image = plt.imread('images/world_map.jpg')
     
-    '''
+    
+    # ---------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------
     # The following section took reference from https://github.com/ual-cci/MSc-Coding-2/blob/master/Week-7-notebooks/tf2_arbitrary_image_stylization.ipynb
-    
-    # The style of Auguste Renoir is used here
-    style_image_url = 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Villeneuve_les_Avignon_%281901%29_-_Auguste_Renoir.jpg'
-
+   
     #content_image = load_image(content_image_url, (900, 500))
-    content_img = plt.imread('images/world_map.png').astype(np.float32)[np.newaxis, ...]
+    content_img = plt.imread('images/world_map.jpg').astype(np.float32)[np.newaxis, ...]
     if content_img.max() > 1.0:
         content_img = content_img / 255.
     if len(content_img.shape) == 3:
@@ -131,15 +132,16 @@ def scatter_map():
     # Stylize content image with given style image.
     # This is pretty fast within a few milliseconds on a GPU.
 
-    outputs = hub_module(tf.constant(curr_image), tf.constant(style_image))
+    outputs = hub_module(tf.constant(content_img), tf.constant(style_image))
     stylized_image = outputs[0]
     
     # ---------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------------
     
-    plt.imshow(stylized_image, extent=[-180, 180, -90, 90], aspect='auto', alpha=0.5)
-'''
+    plt.imshow(stylized_image[0], extent=[-180, 180, -90, 90], aspect='auto', alpha=0.5)
 
-    plt.imshow(curr_image, extent=[-180, 180, -90, 90], aspect='auto', alpha=0.5)
+
+    #plt.imshow(curr_image, extent=[-180, 180, -90, 90], aspect='auto', alpha=0.5)
 
     # The spines don't look good here, remove them
     plt.gca().spines['top'].set_visible(False)
@@ -154,5 +156,3 @@ def scatter_map():
     plt.yticks([-90, -60, -30, 0, 30, 60, 90], fontsize=8)
 
     plt.show()
-
-scatter_map()
